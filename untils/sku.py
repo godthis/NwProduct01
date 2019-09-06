@@ -1,4 +1,3 @@
-import itertools
 import time
 
 def composesku(code, sizegroupid, skulist, brandid, partClassId, partclassname):
@@ -57,7 +56,7 @@ def composesku(code, sizegroupid, skulist, brandid, partClassId, partclassname):
     ptiPartDtSkuDtos = ptiPartDtSkuDtos + ']}'
     return ptiPartDtSkuDtos
 
-
+# 拼接商品定价json
 def composeproductprice(pid, pcode, pprice):
     jsonData='jsonData={"partStpDate":"' + str(time.strftime("%Y-%m-%dT%H:%M:%S.000Z", time.gmtime())) \
              + '","statusId":10250301,"brandId":null,"pricingLatId":10260201,"pricingId":10260101,"memo":"' + pcode +' price is ' + pprice \
@@ -65,6 +64,7 @@ def composeproductprice(pid, pcode, pprice):
              + '","ptiPartHdName":"' + pcode + '","price":' + pprice +',"isCheckedModel":"checked"}],"psmPartStpDtObjList":[]}'
     return jsonData
 
+# 拼接调整单json,增加库存
 def composestock(stockupid, stockupname, stockrepid, stockrepname ,stockstorageid, adjusttypeid, pcode, pid, adjid, skulist, pprice):
     fdsStkadjHdSaveDto='fdsStkadjHdSaveDto={"brandId":-1,"stateId":10290506,"sourceId":10290601,"upGrpId":' + stockupid \
                        + ',"upGrpName":"' + stockupname + '","whsHdId":' + stockrepid + ',"whsHdName":"' + stockrepname \
@@ -86,3 +86,7 @@ def composestock(stockupid, stockupname, stockrepid, stockrepname ,stockstoragei
                          + '","confirmDate":"' + str(time.strftime("%Y-%m-%d", time.gmtime())) + '"}'
     print(fdsStkadjHdSaveDto)
     return fdsStkadjHdSaveDto
+
+
+
+
