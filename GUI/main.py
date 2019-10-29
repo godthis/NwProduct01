@@ -323,7 +323,7 @@ def rootwin():
             # 获取库位id,code,name
             stockstoragecode = re.search(".*?(?=', ')", str(varstockstorage.get())).group()
             stockstoragename = re.search("(?<=', ').*", str(varstockstorage.get())).group()
-            sql = "select id from qs_iss_bas.whs_loccode where own_company_id = '%s' and eff_flag = 1 and loc_code = '%s' and loc_name = '%s' and whs_hd_id = '%s';" \
+            sql = "select loc_code_hd_id from qs_iss_bas.whs_loccode where own_company_id = '%s' and eff_flag = 1 and loc_code = '%s' and loc_name = '%s' and whs_hd_id = '%s';" \
                   % (owncompanyid, stockstoragecode, stockstoragename, stockrepid)
             stockstorageid = searchmysql(sql)
             stockstorageid = re.search("(?<=[(][(]).*?(?=,[)])", stockstorageid).group()

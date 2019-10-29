@@ -21,7 +21,7 @@ def composesku(code, sizegroupid, skulist, brandid, partClassId, partclassname):
                            + '","sizeId":' + skulist[i][1] + ',"sizeCode":"' + skulist[i][2] + '","sizeName":"' + skulist[i][3] + '","ptiPartSkuCode":"' \
                            + code + skulist[i][5] + skulist[i][2] +'","deleteFlag":0}'
 
-    ptiPartDtSkuDtos = ptiPartDtSkuDtos + '],"gctPartDtMeasureVos": [],"ptiPartDttStseVos": ['
+    ptiPartDtSkuDtos = ptiPartDtSkuDtos + '],"ptiPartDtPropVos":[],"ptiPartDtListedVos":[],"ptiPartDtComponentDtos":[],"gctPartDtMeasureVos":[],"ptiPartDttStseVos":['
 
     # 拼接颜色id
     # 去重，新建一个颜色list
@@ -43,7 +43,7 @@ def composesku(code, sizegroupid, skulist, brandid, partClassId, partclassname):
                            '","colorName":"' + colorlist[coli][2] + '","deleteFlag":0}'
 
     # 拼接信息
-    ptiPartDtSkuDtos = ptiPartDtSkuDtos + '],"ptiPartDtPropVos":[],"ptiPartDtListedVos":[],"colorIds": ['
+    ptiPartDtSkuDtos = ptiPartDtSkuDtos + '],"colorIds":['
 
     firstflag = True
     for coli in range(len(colorlist)):
@@ -69,6 +69,7 @@ def composestock(stockupid, stockupname, stockrepid, stockrepname ,stockstoragei
     fdsStkadjHdSaveDto='fdsStkadjHdSaveDto={"brandId":-1,"stateId":10290506,"sourceId":10290601,"upGrpId":' + stockupid \
                        + ',"upGrpName":"' + stockupname + '","whsHdId":' + stockrepid + ',"whsHdName":"' + stockrepname \
                        + '","locId":' + stockstorageid + ',"adjTypeId":' + adjusttypeid + ',"memo":"' + pcode +'","fdsStkadjDtSaveDtos":['
+    tolprice = str(float(pprice) * int(adjid))
     firstflag = True
     for i in range(len(skulist)):
         if firstflag == True:
@@ -79,8 +80,8 @@ def composestock(stockupid, stockupname, stockrepid, stockrepname ,stockstoragei
                              + '","partCode":"' + pcode + '","sizeId":' + skulist[i][1] + ',"sizeName":"' + skulist[i][3]\
                              + '","sizeCode":"' + skulist[i][2] + '","colorId":' + skulist[i][4] + ',"colorCode":"' + skulist[i][5] \
                              + '","colorName":"' + skulist[i][6] + '","deliveryDate":"","memo":"","ptiPartDtSkuId":' + skulist[i][0] \
-                             + ',"salePrice":0,"discount":1,"adjPrice":' + pprice + ',"crtLog":"' + str(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))\
-                             + '","totalSalePrice":"0.00","totalDisPrice":"' + str(int(adjid) * float(pprice)) + '","isCheckedModel":"unchecked","isSelectedModel":"unselected"}'
+                             + ',"salePrice":' + pprice + ',"discount":"1.00","adjPrice":' + pprice + ',"crtLog":"' + str(time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()))\
+                             + '","totalSalePrice":"' + tolprice + '.00","totalDisPrice":"' + str(int(adjid) * float(pprice)) + '","isCheckedModel":"unchecked","isSelectedModel":"unselected"}'
 
     fdsStkadjHdSaveDto = fdsStkadjHdSaveDto + '],"fdsStkadjDtCodeSaveDtos":[],"stkAdjDate":"' + str(time.strftime("%Y-%m-%d", time.gmtime())) \
                          + '","confirmDate":"' + str(time.strftime("%Y-%m-%d", time.gmtime())) + '"}'
