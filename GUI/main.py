@@ -1,4 +1,5 @@
 import copy
+import decimal
 import os
 import re
 import tkinter
@@ -184,11 +185,21 @@ def rootwin():
 
     # 输入校验-商品定价
     # 先写成正整数吧，后面再说
+    #def checkprice(content):
+    #    if content.isdigit() or (content == ""):
+    #        return True
+    #    else:
+    #        return False
+
+    # 提交时判断价格是否正常
     def checkprice(content):
-        if content.isdigit() or (content == ""):
+        try:
+            if int(decimal.Decimal(content) * 100) == decimal.Decimal(content) * 100:
+                return False
+            else:
+                return True
+        except:
             return True
-        else:
-            return False
 
     # 库存调整-选择上级后仓库下拉框赋值
     def funstockup(event):
@@ -215,6 +226,10 @@ def rootwin():
         varstockstorage.set('')
     # 确认按钮功能
     def inputint():
+        if checkprice(str(varpprice.get())):
+            tkinter.messagebox.showerror('ERROR', message='请输入正确的价格')
+            return 0
+
         # 认证并获取cookie
         envname = varenv.get()
         if envname:
@@ -459,12 +474,13 @@ def rootwin():
     comboboxpsizegroup.pack()
 
     # 商品定价
-    recheckprice = root.register(checkprice)
+    #recheckprice = root.register(checkprice)
     Framepprice = tkinter.Frame(root)
     lableppprice = tkinter.Label(Framepprice, text="商品定价", font=('宋体', 10), width=10, height=2)
     varpprice = tkinter.StringVar()  # 这即是输入框中的内容
     entrypprice = tkinter.Entry(Framepprice, textvariable=varpprice, width=25, validate='key',
-                                validatecommand=(recheckprice, '%P'))
+                                #validatecommand=(recheckprice, '%P')
+                                )
     Framepprice.pack()
     lableppprice.pack(side='left')
     entrypprice.pack()
